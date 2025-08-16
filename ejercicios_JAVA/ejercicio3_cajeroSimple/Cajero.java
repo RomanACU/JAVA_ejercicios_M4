@@ -25,6 +25,7 @@ public class Cajero {
     }
 
     public void consultarMonto() {
+        System.out.println("Cliente: " + nombre + " " + apellido);
         System.out.println("Saldo actual: " + monto);
     }
 }
