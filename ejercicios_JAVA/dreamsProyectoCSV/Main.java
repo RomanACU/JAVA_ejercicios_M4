@@ -55,7 +55,6 @@ public class Main {
         productos.add(nuevoProducto);
         System.out.println("Producto registrado. \n");
 
-        // 💡 Puedes agregar lógica para insertar también en la base de datos aquí si quieres persistir
     }
 
     static void registrarCliente() {
