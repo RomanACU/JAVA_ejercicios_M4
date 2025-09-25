@@ -10,7 +10,11 @@ public class Main {
     static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
+        // Importar productos desde CSV a la base de datos
         ImportadorCSV.importarProductos("data/productos.csv");
+
+        // Cargar productos desde la base de datos a la lista
+        productos = ImportadorCSV.cargarProductosDesdeBD();
 
         int opcion;
         do {
@@ -47,8 +51,11 @@ public class Main {
         int stock = scanner.nextInt();
         scanner.nextLine();
 
-        productos.add(new Producto(nombre, precio, categoria, stock));
+        Producto nuevoProducto = new Producto(nombre, precio, categoria, stock);
+        productos.add(nuevoProducto);
         System.out.println("Producto registrado. \n");
+
+        // 💡 Puedes agregar lógica para insertar también en la base de datos aquí si quieres persistir
     }
 
     static void registrarCliente() {
@@ -99,8 +106,15 @@ public class Main {
 
     static void mostrarStock() {
         System.out.println("\n--- STOCK ACTUAL ---");
+
+        if (productos.isEmpty()) {
+            System.out.println("No hay productos registrados.");
+            return;
+        }
+
         for (Producto p : productos) {
             System.out.println(p.getNombre() + " - Stock: " + p.getStock());
         }
     }
 }
+
