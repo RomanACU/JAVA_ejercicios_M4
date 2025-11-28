@@ -1,0 +1,78 @@
+@startuml diagrama
+
+' Clase Producto
+class Producto {
+    - nombre: String
+    - precio: double
+    - categoria: String
+    - stock: int
+    + Producto(nombre: String, precio: double, categoria: String, stock: int)
+    + getNombre(): String
+    + getPrecio(): double
+    + getCategoria(): String
+    + getStock(): int
+    + setStock(stock: int): void
+    + toString(): String
+}
+
+' Clase Cliente
+class Cliente {
+    - id: int
+    - nombre: String
+    - email: String
+    + Cliente(id: int, nombre: String, email: String)
+    + getId(): int
+    + getNombre(): String
+    + getEmail(): String
+    + toString(): String
+}
+
+' Clase DetalleVenta
+class DetalleVenta {
+    - producto: Producto
+    - cantidad: int
+    + DetalleVenta(producto: Producto, cantidad: int)
+    + getProducto(): Producto
+    + getCantidad(): int
+    + calcularSubtotal(): double
+}
+
+' Clase Venta
+class Venta {
+    - idVenta: int
+    - cliente: Cliente
+    - detalles: List<DetalleVenta>
+    + Venta(idVenta: int, cliente: Cliente)
+    + agregarDetalle(producto: Producto, cantidad: int): void
+    + calcularTotal(): double
+    + getIdVenta(): int
+    + getCliente(): Cliente
+    + getDetalles(): List<DetalleVenta>
+}
+
+' Clase SistemaInventario
+class SistemaInventario {
+    - productos: List<Producto>
+    - clientes: List<Cliente>
+    - ventas: List<Venta>
+    - proximoClienteId: int
+    - proximaVentaId: int
+    + SistemaInventario()
+    + registrarProducto(nombre: String, precio: double, categoria: String, stock: int): void
+    + registrarCliente(nombre: String, email: String): Cliente
+    + buscarProducto(nombre: String): Producto
+    + buscarCliente(id: int): Cliente
+    + registrarVenta(clienteId: int, items: List<DetalleVentaDTO>): Venta
+}
+
+' Relación entre las clases
+Producto --> "1" DetalleVenta : tiene
+Cliente --> "1..*" Venta : realiza
+DetalleVenta --> "1" Venta : pertenece a
+Venta --> "1" Cliente : tiene
+Venta --> "*" DetalleVenta : contiene
+SistemaInventario --> "*" Producto : gestiona
+SistemaInventario --> "*" Cliente : gestiona
+SistemaInventario --> "*" Venta : gestiona
+
+@enduml
